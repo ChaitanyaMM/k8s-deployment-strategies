@@ -12,7 +12,7 @@ spec:
       protocol: TCP
   selector:           
     app: java-app
-  type: LoadBalancer  
+  type: NodePort  
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -50,16 +50,5 @@ spec:
           env:
           - name: VERSION
             value: v1.0
-          livenessProbe:
-            httpGet:
-              path: /live
-              port: probe
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: probe
-            periodSeconds: 5
-
+---
        

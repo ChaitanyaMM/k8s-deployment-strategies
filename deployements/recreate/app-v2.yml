@@ -1,46 +1,36 @@
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
-metaspace:
+metadata:
    name: java-app
    labels:
      app: java-app
 spec:
    replicas: 2
    selector:
-     matchLabels:
-       app: java-app
-    strategy:
-       type: Recreate
-    template:
-       metadata:
-         labels:
-            app: java-app
-            version: v2.0
-         annotations:
-            prometheus.io/scrape: "true"
-            prometheus.io/port: "9101"
-        spec:
-          containers:
-          - name: java-app
-            image: chaitu465/k8s-java-deployment-app:2.0
-            ports:
-             - name: http
-               containerPort: 9898
-             - name: probe
-               containerPort: 8686
-            env:
-             - name: VERSION
-               value: v2.0
-            livenessProbe:
-               httpGet:
-                 path: /live
-                 port: probe
-              initialDelaySeconds: 5
-              periodSeconds: 5
-            readinessProbe:
-               httpGet:
-                 path: /ready
-                 port: probe
-              periodSeconds: 5
-
-       
+      matchLabels:
+        app: java-app
+   strategy:
+      type: Recreate
+   selector:
+    matchLabels:
+      app: java-app
+   template:
+      metadata:
+        labels:
+          app: java-app
+          version: v2.0
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "9101"
+      spec:
+        containers:
+        - name: java-app
+          image: chaitu465/k8s-java-deployment-app:2.0
+          ports:
+          - name: http
+            containerPort: 9898
+          - name: probe
+            containerPort: 8686
+          env:
+          - name: VERSION
+            value: v2.0
