@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: java-app
+  labels:
+    app: java-app
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: java-app.com
+    http:
+      paths:
+      - backend:
+          serviceName: java-app-v1
+          servicePort: 80

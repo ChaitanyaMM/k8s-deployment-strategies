@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: java-app
+  labels:
+    app: java-app
+spec:
+  hosts:
+    - java-app.local
+  gateways:
+    - java-app
+  http:
+    - route:
+        - destination:
+            host: java-app-v1

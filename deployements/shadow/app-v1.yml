@@ -1,7 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app
+  labels:
+    name: java-app
+spec:
+  ports:
+    - nodePort: 30130
+      port: 9898      
+      targetPort: 9898  
+      protocol: TCP
+  selector:           
+    app: java-app
+    version: v1.0
+  type: NodePort  
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-   name: java-app-v2
+   name: java-app-v1
    labels:
      app: java-app
 spec:
@@ -9,19 +26,19 @@ spec:
    selector:
       matchLabels:
         app: java-app
-        version: v2.0
+        version: v1.0
    template:
       metadata:
         labels:
           app: java-app
-          version: 2.0
+          version: v1.0
         annotations:
           prometheus.io/scrape: "true"
           prometheus.io/port: "9101"
       spec:
         containers:
         - name: java-app
-          image: chaitu465/k8s-java-deployment-app:2.0
+          image: chaitu465/k8s-java-deployment-app:1.0
           ports:
           - name: http
             containerPort: 9898
@@ -29,4 +46,4 @@ spec:
             containerPort: 8686
           env:
           - name: VERSION
-            value: v2.0
+            value: v1.0

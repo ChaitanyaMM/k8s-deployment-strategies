@@ -37,16 +37,6 @@ spec:
           env:
           - name: VERSION
             value: v1.0
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: probe
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: probe
-            periodSeconds: 5
+
 
        
