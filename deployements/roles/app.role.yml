@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+   name: java-pod-readonly
+   namespace: chaitanya
+rules:
+ - apiGroups: [""]
+   resources: ["pods",services]
+   verbs: ["get", "list", "watch",create]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+   name: java-svc-readonly
+   namespace: chaitanya
+rules:
+ - apiGroups: [""]
+   resources: ["services"]
+   verbs: ["get", "list", "watch"]

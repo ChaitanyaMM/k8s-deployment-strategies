@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: java-pod-reader
+  namespace: chaitanya
+automountServiceAccountToken: false
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: java-svc-reader
+  namespace: chaitanya
+automountServiceAccountToken: false

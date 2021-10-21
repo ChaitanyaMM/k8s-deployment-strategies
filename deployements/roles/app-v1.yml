@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app
+  namespace: chaitanya
+  labels:
+    name: java-app
+spec:
+  ports:
+    - nodePort: 30143
+      port: 9898      
+      targetPort: 9898  
+      protocol: TCP
+  selector:           
+    app: java-app
+  type: LoadBalancer  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: java-app
+   namespace: chaitanya
+   labels:
+     app: java-app
+spec:
+   replicas: 2
+   selector:
+      matchLabels:
+        app: java-app
+   strategy:
+      type: Recreate
+   selector:
+    matchLabels:
+      app: java-app
+   template:
+      metadata:
+        labels:
+          app: java-app
+          version: v1.0
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "9101"
+      spec:
+        containers:
+        - name: java-app
+          image: chaitu465/k8s-java-deployment-app:1.0
+          ports:
+          - name: http
+            containerPort: 9898
+          - name: probe
+            containerPort: 9898
+          env:
+          - name: VERSION
+            value: v1.0
+          resources:
+            requests:
+              cpu: "0.2"
+              memory: 300Mi
+            limits:
+              cpu: "1.0"
+              memory: 300Mi
+          readinessProbe:
+              httpGet:
+                port: 9898
+                path: /actuator/health
+              initialDelaySeconds: 60
+              timeoutSeconds: 2
+              periodSeconds: 20
+              failureThreshold: 5
+          livenessProbe:
+              httpGet:
+                port: 9898
+                path: /actuator/info
+              initialDelaySeconds: 60
+              timeoutSeconds: 2
+              periodSeconds: 20
+              failureThreshold: 5
+
+       

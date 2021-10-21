@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+   name: java-pod-readonlybinding
+   namespace: chaitanya
+subjects:
+ - kind: ServiceAccount
+   name: java-pod-reader
+   namespace: chaitanya
+roleRef:
+   kind: Role
+   name: java-pod-readonly
+   apiGroup: rbac.authorization.k8s.io
