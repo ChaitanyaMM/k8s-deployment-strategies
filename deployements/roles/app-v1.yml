@@ -43,7 +43,7 @@ spec:
       spec:
         containers:
         - name: java-app
-          image: chaitu465/k8s-java-deployment-app:1.0
+          image: chaitu465/k8s-java-deployment-app:3.0
           ports:
           - name: http
             containerPort: 9898
@@ -75,5 +75,3 @@ spec:
               timeoutSeconds: 2
               periodSeconds: 20
               failureThreshold: 5
-
-       
